@@ -1,0 +1,36 @@
+Readme.R
+
+Install additional packages (Line 27,28)
+
+1)caret -> for confusion matrix
+2)randomforst -> for randomforest model
+
+
+
+
+
+
+RunModel.R
+
+1) Adding two additional parameters specified for random forest Hyper Parameters (Line 14)
+	a) RFtrees -> Number of trees in the forest
+	b) MaxNodes -> Max nodes in each tree
+
+2) Adding Section for Random Forest Model (check line 180)
+
+3) confusion matrix is calculated instead of accuracy 
+return confusion matrix instead of Accuracy (check line 224)
+
+
+
+AutoRunModel.R
+
+1)Loop on Random Forest Model (Line 38)
+2)if model is Random Forest loop on Hyper parameter (RFtrees and MaxNodes) (Line 51,52)
+  else work as same combination of parameter with intial RFTree and Max Nodes which will not cause any issue for any other model
+
+3)function CrossValidatehas been updated to below
+	a) we write the results of each model run (from Line 151 to 182)
+	b) do not return any results
+
+4)function AutoRunModel is updated and don't wait for resultes from CrossValidate function 
