@@ -11,7 +11,7 @@ RunModel<- function(TimeStamp,
                     idf = FALSE, 
                     AccMsr = "as_is",
                     Sentm = "None",
-                    Synon = FALSE,RFTrees = 500,MaxNodes = 100)
+                    Synon = FALSE,RFTrees = 500,MaxNodes = 100,trial = 0)
 #possible values for parameters:
 #UseAcc = {"all", "noAvg", "merge"} #account classes
 #Model_name = {"DS", "NB","SVM"}
@@ -184,10 +184,15 @@ RunModel<- function(TimeStamp,
     library(e1071)
     print(RFTrees)
     names(train_accounts) <- make.names(names(train_accounts))
-    forest <- randomForest(Class ~ ., data = train_accounts,ntree=RFTrees,maxnodes= MaxNodes,importance = TRUE)
+    forest <- randomForest(Class ~ ., data = train_accounts,ntree=RFTrees,MaxNodes = MaxNodes,importance = TRUE)
     names(test_accounts) <- make.names(names(test_accounts))
     library(caret)
     pred = predict(forest, test_accounts)
+    imp <- importance(forest,1)
+    
+    filename = paste("trialnum",trial)
+    filename = paste(filename ,".csv")
+    write.table(imp, filename, sep = ",", col.names = T, append = T)
     
   }
   
